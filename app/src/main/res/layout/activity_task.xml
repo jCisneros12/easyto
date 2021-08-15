@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/body_theme"
+    tools:context=".TaskActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/dimen25dp">
+
+
+            <EditText
+                android:id="@+id/text_task_tittle"
+                style="@style/title_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen20dp"
+                android:ems="10"
+                android:hint="@string/hint_title_task"
+                android:inputType="textMultiLine"
+                android:paddingVertical="@dimen/dimen12dp"
+                android:textSize="@dimen/dimen22sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/text_task_body"
+                style="@style/description_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/task_description"
+                android:inputType="textMultiLine"
+                android:paddingVertical="@dimen/dimen8dp"
+                android:textSize="@dimen/dimen18dp"
+                android:textStyle="normal" />
+
+            <!--                android:visibility="gone"-->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_task"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen25dp"
+                style="@style/body_theme"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_example_task"
+                app:shapeAppearanceOverlay="@style/corner_radius_10" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_save_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@color/orange"
+        android:src="@drawable/floppydisk"
+        app:backgroundTint="@color/white"
+        app:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#black_bg</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#151515</color>
+    <color name="teal_200">#FB8C00</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!--    custom app colors light theme-->
+    <color name="orange">#FFA000</color>
+    <color name="white_card">#FFFFFFFF</color>
+    <color name="gray_bg">#F2F2F2</color>
+    <color name="gray_4">#F2F2F2</color>
+    <color name="black_text">#222222</color>
+    <color name="black_text_card">#323232</color>
+    <color name="black_gray">#444444</color>
+    <color name="red">#EB5757</color>
+
+    <!--    custom app colors night theme-->
+    <color name="black_bg">#151515</color>
+    <color name="black_card">#333333</color>
+    <color name="gray_text">#828282</color>
+    <color name="white_text">#CDCDCD</color>
+
+
+</resources>

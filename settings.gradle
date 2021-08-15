@@ -1,0 +1,2 @@
+rootProject.name = "easyto"
+include ':app'

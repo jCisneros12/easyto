@@ -1,0 +1,78 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Easyto" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/gray_bg</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/gray_bg</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.Easyto.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+    <style name="Theme.Easyto.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Easyto.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--    Custom styles-->
+
+<!--    style for body fragments or activities-->
+    <style name="body_theme">
+        <item name="android:background">@color/gray_bg</item>
+    </style>
+
+<!--    style for input text rounded-->
+    <style name="input_rounded">
+        <item name="android:background">@drawable/bg_input_rounded</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@color/black_text_card</item>
+    </style>
+
+<!--    style for task card-->
+    <style name="task_card">
+        <item name="android:background">@drawable/bg_card_corner_radius</item>
+    </style>
+<!--    style for checkbox-->
+    <style name="check_box">
+        <item name="android:textColor">@color/black_text_card</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+<!--    style for rounded corners image-->
+    <style name="corner_radius_20">
+        <item name="cornerSize">15%</item>
+    </style>
+
+    <style name="corner_radius_10">
+        <item name="cornerSize">10%</item>
+    </style>
+
+<!--    Style for big text-->
+    <style name="text_big">
+        <item name="android:textColor">@color/black_text</item>
+    </style>
+
+<!--    style for task title-->
+    <style name="title_task">
+        <item name="android:background">@color/gray_bg</item>
+        <item name="android:textColor">@color/black_gray</item>
+    </style>
+
+    <!--    style for task description-->
+    <style name="description_task">
+        <item name="android:background">@color/gray_bg</item>
+        <item name="android:textColor">@color/black_gray</item>
+    </style>
+
+</resources>

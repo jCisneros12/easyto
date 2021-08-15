@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="easyto">EasyTo</string>
+    <string name="search_task">Buscar tarea</string>
+    <string name="login_text">Inicio de sesión</string>
+    <string name="enter_email">Ingrese su correo</string>
+    <string name="email_text">Correo</string>
+    <string name="password_text">Contraseña</string>
+    <string name="enter_password">Ingrese su contraseña</string>
+    <string name="iniciar">INICIAR</string>
+    <string name="register">REGISTRARME</string>
+    <string name="text_o">O</string>
+    <string name="continue_google">Continuar con Google</string>
+    <string name="hint_title_task">Título de la tarea</string>
+    <string name="task_description">Descripción de la tarea</string>
+    <string name="action_task_complete">Tareas completadas</string>
+    <string name="action_tasks">Tareas sin completar</string>
+</resources>
