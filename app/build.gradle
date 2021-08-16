@@ -1,7 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.google.gms.google-services'  // Google Services plugin
 }
+
 
 android {
     compileSdkVersion 30
@@ -49,6 +51,18 @@ dependencies {
     //lifecycle (ViewModel + LiveData ktx)
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+
+    /// FIREBASE DEPENDENCIES
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:28.3.1')
+    // dependency for the Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-analytics'
+    // Dependency for the Cloud Firestore library
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    // Dependency for the Cloud Storage library
+    implementation 'com.google.firebase:firebase-storage'
+    // Dependency for firebase auth
+    implementation 'com.google.firebase:firebase-auth-ktx'
 
     //Test dependencies
     testImplementation 'junit:junit:4.+'

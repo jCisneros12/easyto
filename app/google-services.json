@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1021826975337",
+    "project_id": "easyto-a872e",
+    "storage_bucket": "easyto-a872e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1021826975337:android:3766ead9f2211aaeeb44f8",
+        "android_client_info": {
+          "package_name": "com.jcisneros.easyto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1021826975337-g000jjv7ie8bip7kkj9o8uojkgbjg99i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi9UBODGWmG0_0rVurdHdZn6TBBg89ScM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1021826975337-g000jjv7ie8bip7kkj9o8uojkgbjg99i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
