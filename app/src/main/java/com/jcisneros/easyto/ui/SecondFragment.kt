@@ -1,4 +1,4 @@
-package com.jcisneros.easyto
+package com.jcisneros.easyto.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.jcisneros.easyto.R
 import com.jcisneros.easyto.databinding.FragmentSecondBinding
 
 /**

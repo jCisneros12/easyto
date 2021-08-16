@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/body_theme"
-    tools:context=".TaskActivity">
+    tools:context=".ui.taskdetail.TaskActivity">
 
     <ScrollView
         android:layout_width="match_parent"

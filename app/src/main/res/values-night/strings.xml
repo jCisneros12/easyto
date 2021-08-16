@@ -15,4 +15,5 @@
     <string name="task_description">Descripción de la tarea</string>
     <string name="action_task_complete">Tareas completadas</string>
     <string name="action_tasks">Tareas sin completar</string>
+    <string name="task_list_emty">No tienes tareas</string>
 </resources>
