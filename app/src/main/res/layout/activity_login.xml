@@ -122,7 +122,6 @@
         android:text="@string/continue_google"
         android:textColor="@color/black_text"
         app:icon="@drawable/google_icon"
-        app:iconTint="none"
         app:elevation="0dp"
         app:cornerRadius="@dimen/dimen25dp" />
 

@@ -10,9 +10,11 @@ class TasksLocalDataSource: ITasksDataSource{
 
         val listTask = listOf(
             TaskModel("Crear logo de la aplicacion", "Crear el logo de la aplicacion" +
-                    "segun los requerimientos del cliente") ,
+                    "segun los requerimientos del cliente", false) ,
             TaskModel("Terminar logica de login", "crear la capa de data de la aplicacion" +
-                    "tal para autenticar el usuario")
+                    "tal para autenticar el usuario", false),
+            TaskModel("Crear diagrama de la BD", "terminar diagrama entidad-relacion" +
+                    "de la base de datos del sistema X", true)
         )
 
         return Resource.Success(listTask)

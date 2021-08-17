@@ -3,7 +3,7 @@
     <string name="app_name_easyto">EasyTo: Todo list</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
+<!--    <string name="first_fragment_label">First Fragment</string>-->
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
@@ -26,4 +26,5 @@
     <string name="action_task_complete">Tareas completadas</string>
     <string name="action_tasks">Tareas sin completar</string>
     <string name="task_list_emty">No tienes tareas</string>
+    <string name="no_text" />
 </resources>
