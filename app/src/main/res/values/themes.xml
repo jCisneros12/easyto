@@ -54,8 +54,8 @@
         <item name="cornerSize">15%</item>
     </style>
 
-    <style name="corner_radius_10">
-        <item name="cornerSize">10%</item>
+    <style name="corner_radius_50">
+        <item name="cornerSize">15%</item>
     </style>
 
 <!--    Style for big text-->

@@ -1,5 +1,6 @@
 package com.jcisneros.easyto.ui
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.jcisneros.easyto.R
 import com.jcisneros.easyto.databinding.ActivityMainBinding
+import com.jcisneros.easyto.ui.taskdetail.TaskDetailActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        binding.fabAddTask.setOnClickListener {
+            startActivity(Intent(this, TaskDetailActivity::class.java))
+         }
 
 //        binding.fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/body_theme"
-    tools:context=".ui.taskdetail.TaskActivity">
+    tools:context=".ui.taskdetail.TaskDetailActivity">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -49,21 +50,24 @@
                 android:textSize="@dimen/dimen18dp"
                 android:textStyle="normal" />
 
-            <!--                android:visibility="gone"-->
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_task"
+                style="@style/body_theme"
                 android:layout_width="350dp"
                 android:layout_height="350dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/dimen25dp"
-                style="@style/body_theme"
                 android:scaleType="centerCrop"
                 android:src="@drawable/image_example_task"
-                app:shapeAppearanceOverlay="@style/corner_radius_10" />
-
+                android:visibility="gone"
+                app:shapeAppearanceOverlay="@style/corner_radius_50" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
+
+    <include layout="@layout/sheet_bottom_image_options" />
+
+<!--    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"-->
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -79,4 +83,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -14,9 +14,6 @@ import com.jcisneros.easyto.databinding.FragmentTasksBinding
 import com.jcisneros.easyto.domain.repository.tasks.TasksRepoImpl
 import com.jcisneros.easyto.utils.Resource
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class TasksFragment : Fragment() {
 
     //ViewBinding
@@ -50,9 +47,6 @@ class TasksFragment : Fragment() {
 
         observeTasks()
 
-//        binding.buttonFirst.setOnClickListener {
-//            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-//        }
     }
 
     private fun observeTasks(){
@@ -64,11 +58,12 @@ class TasksFragment : Fragment() {
                 is Resource.Success -> {
                     //TODO: show or not UI when list is empty
                     adapter.setListData(tasks.data)
+                    adapter.notifyDataSetChanged()
                 }
                 is Resource.Failure ->{
                     //TODO: create extension function for Toast
                     Toast.makeText(requireContext(), "Ocurrio un problema", Toast.LENGTH_SHORT).show()
-                    Log.e("PRODUCT", "ocurrio un error de tipo: CATEGORY-ERR")
+                    Log.e("PRODUCT", "ocurrio un error: ${tasks.exception}")
                 }
             }
         })
