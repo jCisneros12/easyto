@@ -1,4 +1,4 @@
-package com.jcisneros.easyto.base
+package com.jcisneros.easyto.ui.base
 
 import android.Manifest
 import android.content.Intent

@@ -17,15 +17,15 @@ class TasksFirebaseDataSource {
     // Access a Cloud Firestore instance
     private val db = Firebase.firestore
 
-    @ExperimentalCoroutinesApi
     suspend fun getTasks(): Resource<List<TaskModel>> {
         //list of task
-        var arrayTask = mutableListOf<TaskModel>()
+        val arrayTask = mutableListOf<TaskModel>()
 
         //document reference //TODO: change document for userId logged
         val resultData = db.collection("users")
             .document("0yZhV7yRuzKUiJplmZ2V").collection("tasks").get().await()
 
+        //fetch firebase data
         resultData.forEach { document ->
             arrayTask.add(
                 TaskModel(
@@ -39,28 +39,6 @@ class TasksFirebaseDataSource {
         }
 
         return Resource.Success(arrayTask)
-
-
-//        val subscription = documentRef.addSnapshotListener{ docSnapshot, _ ->
-//            docSnapshot?.let {
-//                val tasks = it.documents
-//                arrayTask = ArrayList()
-//                tasks.forEach { document ->
-//                    arrayTask.add(
-//                        TaskModel(
-//                            taskId = document.id,
-//                            title = document.getString("title").toString(),
-//                            description = document.getString("description").toString(),
-//                            isComplete = document.getString("isComplete").toBoolean(),
-//                            image = document.getString("image").toString()
-//                        )
-//                    )
-//                }
-//                offer(Resource.Success(arrayTask))
-//            }
-//        }
-//
-//        awaitClose { subscription.remove() }
     }
 
 

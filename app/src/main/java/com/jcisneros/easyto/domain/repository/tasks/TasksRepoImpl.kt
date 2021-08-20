@@ -15,62 +15,37 @@ class TasksRepoImpl(
     private val localDataSource: ITasksDataSource,
     private val firebaseDataSource: TasksFirebaseDataSource
 ) : ITasksRepo {
-    override fun getAllTask(): Resource<List<TaskModel>> {
-        return localDataSource.getAllTasks()
-    }
 
-    //for update local db
-    var isUpdate = true
-
-    //get all task
-    override suspend fun getLocalTasks(): Flow<Resource<List<TaskModel>>> =
-        localDataSource.getTasks()
-
-    //this method get list of task from local DB if that is not empty, else is empty, then get data
-    //from firestore and will save in local DB
+    /*
+    * this method get list of task from local DB if that, else if empty, then will get data from
+    * firestore and will save in local DB
+    * */
     @ExperimentalCoroutinesApi
-    override suspend fun getTasks(): Flow<Resource<List<TaskModel>>> =
+    override suspend fun getAllTasks(): Flow<Resource<List<TaskModel>>> =
         callbackFlow {
-            localDataSource.getTasks().collect {
-                //verify if local data is not empty
+            localDataSource.getAllTasks().collect {
                 when (it) {
                     is Resource.Success -> {
+                        //verify if local data is not empty
                         if (it.data.isNotEmpty()) {
                             Log.i("DATA-DB", "FROM LOCAL DB")
+                            //return data from local db
                             trySend(it)
                         } else {
+                            //else get data from firebase and save that in local
                             val firebaseData = firebaseDataSource.getTasks()
-                            //TODO: set data to local db
-                            when (firebaseData) {
-                                is Resource.Success -> {
-                                    if (firebaseData.data.isNotEmpty()) {
-                                        firebaseData.data.forEach { task ->
-                                            localDataSource.insertTask(modelTaskToEntity(task))
-                                        }
-                                    }
-                                }
-                            }
+                            localDataSource.insertTasks(firebaseData)
                             Log.i("DATA-DB", "FROM FIRESTORE")
+                            //return data from firebase
                             trySend(firebaseData)
                         }
+
                     }
                 }
             }
-            //get data from Firestore and save in local db
-//            if (!isUpdate) {
-//                firebaseDataSource.getTasks().collect {
-//                    when (it) {
-//                        is Resource.Success -> {
-//                            if (it.data.isNotEmpty()) {
-//                                //updale local db
-//                                it.data.forEach { task ->
-//                                    localDataSource.insertTask(modelTaskToEntity(task))
-//                                }
-//                            }
-//                            offer(it)
-//                        }
-//                    }
-//                }
-//            }
         }
+
+    //this method get tasks from local db only
+    override suspend fun getLocalTasks(): Flow<Resource<List<TaskModel>>> =
+        localDataSource.getAllTasks()
 }

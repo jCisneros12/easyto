@@ -6,7 +6,7 @@ import com.jcisneros.easyto.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface ITasksDataSource {
-    fun getAllTasks(): Resource<List<TaskModel>>
-    suspend fun getTasks(): Flow<Resource<List<TaskModel>>>
+    suspend fun getAllTasks(): Flow<Resource<List<TaskModel>>>
     suspend fun insertTask(taskEntity: TaskEntity): Resource<Boolean>
+    suspend fun insertTasks(data: Resource<List<TaskModel>>)
 }

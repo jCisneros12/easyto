@@ -11,20 +11,11 @@ import kotlinx.coroutines.flow.collect
 
 class TasksViewModel(private val repository: ITasksRepo): ViewModel() {
 
-    val allTasks = liveData(Dispatchers.IO) {
-        emit(Resource.Loading())
-        try{
-            emit(repository.getAllTask())
-        }catch (e: Exception){
-            emit(Resource.Failure(e))
-            Log.e("ALL-TASK", e.toString())
-        }
-    }
-
+    //list with tasks
     val taskList = liveData(Dispatchers.IO) {
         emit(Resource.Loading())
         try {
-            repository.getTasks().collect { tasks ->
+            repository.getAllTasks().collect { tasks ->
                 emit(tasks)
             }
         }catch (e: Exception){
