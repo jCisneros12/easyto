@@ -50,6 +50,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:visibility="gone"
+        android:id="@+id/txt_empty_tasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/task_list_emty"
@@ -58,5 +59,16 @@
         app:layout_constraintTop_toBottomOf="@+id/image_task_empty"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/tasks_progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

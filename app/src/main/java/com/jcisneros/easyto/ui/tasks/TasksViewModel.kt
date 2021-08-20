@@ -7,6 +7,7 @@ import androidx.lifecycle.liveData
 import com.jcisneros.easyto.domain.repository.tasks.ITasksRepo
 import com.jcisneros.easyto.utils.Resource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 
 class TasksViewModel(private val repository: ITasksRepo): ViewModel() {
 
@@ -17,6 +18,18 @@ class TasksViewModel(private val repository: ITasksRepo): ViewModel() {
         }catch (e: Exception){
             emit(Resource.Failure(e))
             Log.e("ALL-TASK", e.toString())
+        }
+    }
+
+    val taskList = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            repository.getTasks().collect { tasks ->
+                emit(tasks)
+            }
+        }catch (e: Exception){
+            emit(Resource.Failure(e))
+            Log.e("ERROR-TASKS", e.toString())
         }
     }
 
