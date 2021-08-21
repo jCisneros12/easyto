@@ -64,11 +64,9 @@ class TasksFragment : Fragment() {
         viewModel.taskList.observe(viewLifecycleOwner, { tasks ->
             when (tasks) {
                 is Resource.Loading -> {
-                    //TODO: show ui for loading
                     binding.tasksProgressBar.visibility = View.VISIBLE
                 }
                 is Resource.Success -> {
-                    //TODO: show or not UI when list is empty
                     binding.tasksProgressBar.visibility = View.GONE
                     adapter.setListData(tasks.data)
                     if (tasks.data.isEmpty()) binding.txtEmptyTasks.visibility = View.VISIBLE

@@ -14,7 +14,7 @@ import java.lang.Exception
 class TaskDetailViewModel(private val repository: ITaskDetailRepo): ViewModel() {
 
     fun saveTask(taskModel: TaskModel) = liveData(Dispatchers.IO){
-        emit(Resource.Success(false))
+        emit(Resource.Loading())
         try {
             emit(repository.insertNewTask(taskModel))
         }catch (e: Exception){

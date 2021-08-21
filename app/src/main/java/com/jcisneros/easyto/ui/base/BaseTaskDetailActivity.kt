@@ -22,7 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jcisneros.easyto.R
 import com.jcisneros.easyto.databinding.ActivityTaskBinding
 
-abstract class BaseTaskDetailActivity: AppCompatActivity() {
+abstract class BaseTaskDetailActivity : AppCompatActivity() {
 
     //ViewBinding
     protected lateinit var binding: ActivityTaskBinding
@@ -39,6 +39,7 @@ abstract class BaseTaskDetailActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        title = ""
 
         //image option bottom sheet dialog
         val cardView = findViewById<CardView>(R.id.sheet_bottom_image_options)
@@ -89,41 +90,42 @@ abstract class BaseTaskDetailActivity: AppCompatActivity() {
     }
 
     //Select image from gallery and Handle permissions
-    private fun selectImage(){
+    private fun selectImage() {
         //check Android version
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             //check if permission not is granted
-            if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
                 requestExternalStoragePermission()
-            }else{
+            } else {
                 selectImageFromGallery()
             }
         }
     }
 
     private val startForActivityGallery = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()){ res ->
-        if(res.resultCode == RESULT_OK){
+        ActivityResultContracts.StartActivityForResult()
+    ) { res ->
+        if (res.resultCode == RESULT_OK) {
             val imageUri = res.data?.data
             taskImageUri = imageUri
-            if(taskImageUri!=null) {
+            if (taskImageUri != null) {
                 binding.imageTask.visibility = View.VISIBLE
                 binding.imageTask.setImageURI(taskImageUri)
-            }
-            else binding.imageTask.visibility = View.GONE
+            } else binding.imageTask.visibility = View.GONE
             //binding.imageTask.setImageURI(imageUri)
         }
     }
 
-    private fun selectImageFromGallery(){
+    private fun selectImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         intent.type = "image/*"
         startForActivityGallery.launch(intent)
     }
 
-    protected fun getTaskDetails(): Boolean{
-        if(validateFields()){
+    protected fun getTaskDetails(): Boolean {
+        if (validateFields()) {
             taskTitle = binding.textTaskTittle.text.toString()
             taskDescription = binding.textTaskBody.text.toString()
             return true
@@ -131,15 +133,24 @@ abstract class BaseTaskDetailActivity: AppCompatActivity() {
         return false
     }
 
-    private fun validateFields(): Boolean{
-        if(TextUtils.isEmpty(binding.textTaskTittle.text.toString())){
+    private fun validateFields(): Boolean {
+        if (TextUtils.isEmpty(binding.textTaskTittle.text.toString())) {
             binding.textTaskTittle.error = this.getString(R.string.required_input)
             return false
         }
         return true
     }
 
-    /// override methods
+    //show progress bar
+    protected fun showProgressBar() {
+        binding.taskProgressBar.visibility = View.VISIBLE
+    }
+
+    protected fun hideProgressBar() {
+        binding.taskProgressBar.visibility = View.GONE
+    }
+
+/// override methods
 
     //create menu options
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -156,11 +167,11 @@ abstract class BaseTaskDetailActivity: AppCompatActivity() {
     //listener menu options selected
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId){
-            R.id.action_image ->{
+        when (item.itemId) {
+            R.id.action_image -> {
                 selectImage()
             }
-            R.id.action_delete ->{
+            R.id.action_delete -> {
                 //TODO: replace toast
                 Toast.makeText(this, "Delete task", Toast.LENGTH_SHORT).show()
             }
@@ -169,34 +180,40 @@ abstract class BaseTaskDetailActivity: AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    ///Handle permission for READ_EXTERNAL_STORAGE
+///Handle permission for READ_EXTERNAL_STORAGE
 
     private fun requestExternalStoragePermission() {
         //user denied permission
-        if(ActivityCompat.shouldShowRequestPermissionRationale(
-                this, Manifest.permission.READ_EXTERNAL_STORAGE)){
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this, Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
             //request permission
             ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 10)
-        }
-        else{
+                this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 10
+            )
+        } else {
             //request permission
             ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 10)
+                this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 10
+            )
         }
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == 10){
-            if(grantResults.isNotEmpty() && grantResults[0]== PackageManager.PERMISSION_GRANTED){
+        if (requestCode == 10) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 selectImageFromGallery()
-            }else{
-                Toast.makeText(this, this.getString(R.string.permission_denied),
-                    Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(
+                    this, this.getString(R.string.permission_denied),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }

@@ -3,6 +3,7 @@ package com.jcisneros.easyto.ui.taskdetail
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.jcisneros.easyto.R
 import com.jcisneros.easyto.data.datasource.firebase.taskdetail.TaskDetailFirebaseDataSource
 import com.jcisneros.easyto.data.datasource.local.room.database.EasytoRoomDataBase
 import com.jcisneros.easyto.data.datasource.local.taskdetail.TaskDetailLocalDataSource
@@ -36,27 +37,36 @@ class TaskDetailActivity : BaseTaskDetailActivity() {
 
     }
 
-    private fun saveTask(){
-        if (getTaskDetails()){
+    private fun saveTask() {
+        if (getTaskDetails()) {
             val taskModel = TaskModel(
                 taskId = "tempId",
                 title = taskTitle,
                 description = taskDescription,
                 isComplete = taskComplete,
                 image = "",
-                imageUri = taskImageUri)
+                imageUri = taskImageUri
+            )
 
             viewModel.saveTask(taskModel).observe(this, {
-                when(it){
-                    is Resource.Loading ->{
-                        //TODO: show any loading ui
+                when (it) {
+                    is Resource.Loading -> {
+                        showProgressBar()
                     }
-                    is Resource.Success ->{
-                        //TODO: change toast
-                        Toast.makeText(this, "Guardado", Toast.LENGTH_SHORT).show()
-                        finish()
+                    is Resource.Success -> {
+                        hideProgressBar()
+                        if (it.data) {
+                            Toast.makeText(this, this.getString(R.string.save_success),
+                                Toast.LENGTH_SHORT).show()
+                            finish()
+                        }else{
+                            Toast.makeText(this, this.getString(R.string.save_failure),
+                                Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
                     }
-                    is Resource.Failure ->{
+
+                    is Resource.Failure -> {
                         Toast.makeText(this, "Ocurrió un problema", Toast.LENGTH_SHORT).show()
                     }
                 }

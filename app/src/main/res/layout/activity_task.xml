@@ -8,6 +8,15 @@
     style="@style/body_theme"
     tools:context=".ui.taskdetail.TaskDetailActivity">
 
+    <ProgressBar
+        android:id="@+id/task_progress_bar"
+        android:visibility="gone"
+        android:indeterminate="true"
+        android:backgroundTint="@color/orange"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
