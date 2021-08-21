@@ -1,13 +1,16 @@
 package com.jcisneros.easyto.data.model
 
+import android.graphics.Bitmap
+import android.net.Uri
 import com.jcisneros.easyto.data.datasource.local.room.entities.TaskEntity
 
 data class TaskModel(
-    val taskId: String,
+    var taskId: String,
     val title: String,
     val description: String,
     val isComplete: Boolean,
-    val image: String? = null
+    val image: Bitmap? = null,
+    val imageUri: Uri? = null
 )
 
 //convert entity to model

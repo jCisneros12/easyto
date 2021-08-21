@@ -3,6 +3,7 @@
     package="com.jcisneros.easyto">
 
     <application
+        android:name=".EasytoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_easyto"
         android:label="@string/app_name"

@@ -44,10 +44,10 @@ class TasksAdapter(
         fun bindView(task: TaskModel) {
             binding.checkTask.text = task.title
             binding.checkTask.isChecked = task.isComplete
-//            if(task.image!=null){
-//                binding.imageTask.visibility = View.VISIBLE
-//                binding.imageTask.setImageURI(task.image)
-//            }
+            if(task.image!=null){
+                binding.imageTask.setImageBitmap(task.image)
+                binding.imageTask.visibility = View.VISIBLE
+            }else binding.imageTask.visibility = View.GONE
         }
     }
 }

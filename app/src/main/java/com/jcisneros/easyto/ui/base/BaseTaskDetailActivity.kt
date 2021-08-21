@@ -3,10 +3,13 @@ package com.jcisneros.easyto.ui.base
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -17,9 +20,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
+import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jcisneros.easyto.R
 import com.jcisneros.easyto.databinding.ActivityTaskBinding
+import id.zelory.compressor.Compressor
+import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileDescriptor
+import java.io.IOException
 
 abstract class BaseTaskDetailActivity: AppCompatActivity() {
 
@@ -28,12 +39,17 @@ abstract class BaseTaskDetailActivity: AppCompatActivity() {
 
     //image uri
     protected var taskImageUri: Uri? = null
+    //image bitmap
+    protected var taskImageBitmap: Bitmap? = null
+    //task details
+    protected lateinit var taskTitle: String
+    protected var taskDescription = "No description"
+    protected var taskComplete = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         //image option bottom sheet dialog
         val cardView = findViewById<CardView>(R.id.sheet_bottom_image_options)
@@ -103,6 +119,10 @@ abstract class BaseTaskDetailActivity: AppCompatActivity() {
             val imageUri = res.data?.data
             taskImageUri = imageUri
 
+            //compress image in coroutine using Compressor
+
+            taskImageBitmap = taskImageUri?.let { uriToBitmap(it) }
+
             if(taskImageUri!=null) {
                 binding.imageTask.visibility = View.VISIBLE
                 binding.imageTask.setImageURI(taskImageUri)
@@ -118,6 +138,22 @@ abstract class BaseTaskDetailActivity: AppCompatActivity() {
         startForActivityGallery.launch(intent)
     }
 
+    protected fun getTaskDetails(): Boolean{
+        if(validateFields()){
+            taskTitle = binding.textTaskTittle.text.toString()
+            taskDescription = binding.textTaskBody.text.toString()
+            return true
+        }
+        return false
+    }
+
+    private fun validateFields(): Boolean{
+        if(TextUtils.isEmpty(binding.textTaskTittle.text.toString())){
+            binding.textTaskTittle.error = this.getString(R.string.required_input)
+            return false
+        }
+        return true
+    }
 
     /// override methods
 
@@ -179,6 +215,19 @@ abstract class BaseTaskDetailActivity: AppCompatActivity() {
                     Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun uriToBitmap(selectedFileUri: Uri): Bitmap? {
+        try {
+            val parcelFileDescriptor = contentResolver.openFileDescriptor(selectedFileUri, "r")
+            val fileDescriptor: FileDescriptor = parcelFileDescriptor!!.fileDescriptor
+            val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+            parcelFileDescriptor.close()
+            return image
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return null
     }
 
 }
