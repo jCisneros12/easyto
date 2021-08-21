@@ -3,8 +3,6 @@ package com.jcisneros.easyto.ui.base
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,17 +18,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
-import androidx.core.net.toUri
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jcisneros.easyto.R
 import com.jcisneros.easyto.databinding.ActivityTaskBinding
-import id.zelory.compressor.Compressor
-import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileDescriptor
-import java.io.IOException
 
 abstract class BaseTaskDetailActivity: AppCompatActivity() {
 
@@ -39,8 +29,7 @@ abstract class BaseTaskDetailActivity: AppCompatActivity() {
 
     //image uri
     protected var taskImageUri: Uri? = null
-    //image bitmap
-    protected var taskImageBitmap: Bitmap? = null
+
     //task details
     protected lateinit var taskTitle: String
     protected var taskDescription = "No description"
@@ -118,11 +107,6 @@ abstract class BaseTaskDetailActivity: AppCompatActivity() {
         if(res.resultCode == RESULT_OK){
             val imageUri = res.data?.data
             taskImageUri = imageUri
-
-            //compress image in coroutine using Compressor
-
-            taskImageBitmap = taskImageUri?.let { uriToBitmap(it) }
-
             if(taskImageUri!=null) {
                 binding.imageTask.visibility = View.VISIBLE
                 binding.imageTask.setImageURI(taskImageUri)
@@ -215,19 +199,6 @@ abstract class BaseTaskDetailActivity: AppCompatActivity() {
                     Toast.LENGTH_LONG).show()
             }
         }
-    }
-
-    private fun uriToBitmap(selectedFileUri: Uri): Bitmap? {
-        try {
-            val parcelFileDescriptor = contentResolver.openFileDescriptor(selectedFileUri, "r")
-            val fileDescriptor: FileDescriptor = parcelFileDescriptor!!.fileDescriptor
-            val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
-            parcelFileDescriptor.close()
-            return image
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return null
     }
 
 }

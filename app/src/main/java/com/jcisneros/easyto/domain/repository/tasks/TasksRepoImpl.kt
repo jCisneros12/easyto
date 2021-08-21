@@ -39,7 +39,6 @@ class TasksRepoImpl(
                             //return data from firebase
                             trySend(firebaseData)
                         }
-
                     }
                 }
             }

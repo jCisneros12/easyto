@@ -43,9 +43,9 @@ class TaskDetailActivity : BaseTaskDetailActivity() {
                 title = taskTitle,
                 description = taskDescription,
                 isComplete = taskComplete,
-                image = taskImageBitmap,
+                image = "",
                 imageUri = taskImageUri)
-            //TODO: set data to ViewModel
+
             viewModel.saveTask(taskModel).observe(this, {
                 when(it){
                     is Resource.Loading ->{

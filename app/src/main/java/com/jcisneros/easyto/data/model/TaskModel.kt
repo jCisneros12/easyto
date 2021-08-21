@@ -9,14 +9,14 @@ data class TaskModel(
     val title: String,
     val description: String,
     val isComplete: Boolean,
-    val image: Bitmap? = null,
+    var image: String? = null,
     val imageUri: Uri? = null
 )
 
 //convert entity to model
-fun toTaskModel(entitieList: List<TaskEntity>): List<TaskModel> {
+fun toTaskModel(entityList: List<TaskEntity>): List<TaskModel> {
     val taskModelList  = mutableListOf<TaskModel>()
-    entitieList.forEach { entity ->
+    entityList.forEach { entity ->
             val taskModel = TaskModel(
                 taskId =entity.taskId,
                 title = entity.title!!,

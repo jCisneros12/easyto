@@ -1,6 +1,5 @@
 package com.jcisneros.easyto.data.datasource.local.room.entities
 
-import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -23,5 +22,5 @@ class TaskEntity(
     val isComplete: Boolean,
 
     @ColumnInfo(name = "image_task")
-    val image: Bitmap? = null
+    val image: String?
 )

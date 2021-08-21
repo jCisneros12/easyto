@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.databinding.ItemTaskBinding
 
@@ -44,8 +45,8 @@ class TasksAdapter(
         fun bindView(task: TaskModel) {
             binding.checkTask.text = task.title
             binding.checkTask.isChecked = task.isComplete
-            if(task.image!=null){
-                binding.imageTask.setImageBitmap(task.image)
+            if(task.image!!.isNotEmpty()){
+                Glide.with(context).load(task.image).into(binding.imageTask)
                 binding.imageTask.visibility = View.VISIBLE
             }else binding.imageTask.visibility = View.GONE
         }

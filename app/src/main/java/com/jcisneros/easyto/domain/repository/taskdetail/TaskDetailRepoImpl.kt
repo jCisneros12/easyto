@@ -1,9 +1,7 @@
 package com.jcisneros.easyto.domain.repository.taskdetail
 
-import android.content.Context
 import com.jcisneros.easyto.data.datasource.firebase.taskdetail.TaskDetailFirebaseDataSource
 import com.jcisneros.easyto.data.datasource.interfaces.ITaskDetailDataSource
-import com.jcisneros.easyto.data.datasource.interfaces.ITasksDataSource
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.utils.Resource
 
@@ -21,7 +19,8 @@ class TaskDetailRepoImpl(
         when (firebaseRes) {
             is Resource.Success -> {
                 //2.- set data to local DB
-                taskModel.taskId = firebaseRes.data //change to Firebase id
+                taskModel.taskId = firebaseRes.data[0] //change to Firebase id
+                taskModel.image = firebaseRes.data[1]//set url image
                 localDataSource.insertNewTask(taskModel)
                 return Resource.Success(true)
             }

@@ -30,7 +30,7 @@ class TasksFragment : Fragment() {
                 TasksLocalDataSource(
                     EasytoRoomDataBase.getDataBase(requireContext().applicationContext).taskDao()
                 ),
-                TasksFirebaseDataSource(requireContext())
+                TasksFirebaseDataSource()
             )
         )
     }
