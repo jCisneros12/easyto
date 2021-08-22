@@ -6,10 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.domain.repository.taskdetail.ITaskDetailRepo
-import com.jcisneros.easyto.domain.repository.tasks.ITasksRepo
 import com.jcisneros.easyto.utils.Resource
 import kotlinx.coroutines.Dispatchers
-import java.lang.Exception
+import kotlin.Exception
 
 class TaskDetailViewModel(private val repository: ITaskDetailRepo): ViewModel() {
 
@@ -20,6 +19,16 @@ class TaskDetailViewModel(private val repository: ITaskDetailRepo): ViewModel() 
         }catch (e: Exception){
             emit(Resource.Failure(e))
             Log.e("VM-NEW-TASK", e.toString())
+        }
+    }
+
+    fun getTaskById(taskId: String) = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(repository.getTaskById(taskId))
+        }catch (e: Exception){
+            emit(Resource.Failure(e))
+            Log.e("VM-GET-TASK", e.toString())
         }
     }
 

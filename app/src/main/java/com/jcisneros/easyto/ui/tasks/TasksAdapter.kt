@@ -4,13 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.databinding.ItemTaskBinding
 
 class TasksAdapter(
-    private val context: Context
+    private val context: Context,
+    private val itemClickListener: OnCategoryClickListener
 ) : RecyclerView.Adapter<TasksAdapter.TasksViewHolder>() {
 
     //tasks list
@@ -39,11 +41,20 @@ class TasksAdapter(
         else 0
     }
 
+    //interface for implements onClick methods
+    interface OnCategoryClickListener{
+        fun onEditClick(taskModel: TaskModel)
+        //add more methods here
+    }
+
     inner class TasksViewHolder(
         private val binding: ItemTaskBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bindView(task: TaskModel) {
-            binding.checkTask.text = task.title
+            //onClick listeners
+            binding.textTaskTittleCard.setOnClickListener { itemClickListener.onEditClick(task) }
+            //set data to item view
+            binding.textTaskTittleCard.text = task.title
             binding.checkTask.isChecked = task.isComplete
             if(task.image!!.isNotEmpty()){
                 Glide.with(context).load(task.image).into(binding.imageTask)

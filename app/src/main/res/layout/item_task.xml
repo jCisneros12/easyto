@@ -19,14 +19,23 @@
             android:id="@+id/check_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:maxLines="1"/>
+
+        <TextView
+            android:id="@+id/text_task_tittle_card"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="6"
             style="@style/check_box"
             android:layout_gravity="center"
-            android:layout_marginEnd="2dp"
+            android:gravity="center_vertical"
             android:maxLines="1"
             android:ellipsize="end"
             android:maxWidth="100dp"
-            android:text="Create a login design UI" />
+            android:text="Nombre de la tarea"/>
+
+
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_task"

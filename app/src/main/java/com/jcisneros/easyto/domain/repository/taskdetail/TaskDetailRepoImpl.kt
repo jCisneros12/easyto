@@ -15,8 +15,7 @@ class TaskDetailRepoImpl(
     * */
     override suspend fun insertNewTask(taskModel: TaskModel): Resource<Boolean> {
         //1.- set data to firebase
-        val firebaseRes = firebaseDataSource.setNewTask(taskModel)
-        when (firebaseRes) {
+        when (val firebaseRes = firebaseDataSource.setNewTask(taskModel)) {
             is Resource.Success -> {
                 //2.- set data to local DB
                 taskModel.taskId = firebaseRes.data[0] //change to Firebase id
@@ -26,5 +25,10 @@ class TaskDetailRepoImpl(
             }
         }
         return Resource.Success(false)
+    }
+
+    //get task By id from local db
+    override suspend fun getTaskById(taskId: String): Resource<TaskModel> {
+        return localDataSource.getTaskById(taskId)
     }
 }

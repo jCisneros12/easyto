@@ -35,4 +35,5 @@
     <string name="required_input">Ingrese el titulo de la tarea</string>
     <string name="save_success">Guardado</string>
     <string name="save_failure">No se pudo guardar</string>
+    <string name="task_id">taskId</string>
 </resources>

@@ -18,8 +18,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jcisneros.easyto.R
+import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.databinding.ActivityTaskBinding
 
 abstract class BaseTaskDetailActivity : AppCompatActivity() {
@@ -83,7 +85,6 @@ abstract class BaseTaskDetailActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun onSlide(view: View, p1: Float) {
             }
         })
@@ -139,6 +140,15 @@ abstract class BaseTaskDetailActivity : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    protected fun fillView(taskModel: TaskModel){
+        binding.textTaskTittle.setText(taskModel.title)
+        binding.textTaskBody.setText(taskModel.description)
+        if(taskModel.image!!.isNotEmpty()) {
+            binding.imageTask.visibility = View.VISIBLE
+            Glide.with(this).load(taskModel.image).into(binding.imageTask)
+        }
     }
 
     //show progress bar

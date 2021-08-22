@@ -5,4 +5,5 @@ import com.jcisneros.easyto.utils.Resource
 
 interface ITaskDetailRepo {
     suspend fun insertNewTask(taskModel: TaskModel): Resource<Boolean>
+    suspend fun getTaskById(taskId: String): Resource<TaskModel>
 }

@@ -6,5 +6,6 @@ import com.jcisneros.easyto.utils.Resource
 interface ITaskDetailDataSource {
 
     suspend fun insertNewTask(taskModel: TaskModel)
+    suspend fun getTaskById(taskId: String): Resource<TaskModel>
 
 }

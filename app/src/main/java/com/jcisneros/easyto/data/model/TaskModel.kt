@@ -6,8 +6,8 @@ import com.jcisneros.easyto.data.datasource.local.room.entities.TaskEntity
 
 data class TaskModel(
     var taskId: String,
-    val title: String,
-    val description: String,
+    val title: String?,
+    val description: String?,
     val isComplete: Boolean,
     var image: String? = null,
     val imageUri: Uri? = null
@@ -54,5 +54,17 @@ fun modelTaskToEntity(taskModel: TaskModel): TaskEntity{
         description = taskModel.description,
         isComplete = taskModel.isComplete,
         image = taskModel.image
+    )
+}
+
+//convert TaskEntity to TaskModel
+
+fun entityTaskToModel(tskEntity: TaskEntity): TaskModel{
+    return TaskModel(
+        taskId = tskEntity.taskId,
+        title = tskEntity.title,
+        description = tskEntity.description,
+        isComplete = tskEntity.isComplete,
+        image = tskEntity.image
     )
 }
