@@ -18,4 +18,12 @@ class TaskDetailLocalDataSource(private val taskDao: TaskDao): ITaskDetailDataSo
         val taskModel = entityTaskToModel(taskDao.getTaskById(taskId))
         return Resource.Success(taskModel)
     }
+
+    override suspend fun deleteTaskById(taskId: String) {
+        taskDao.deleteTaskById(taskId)
+    }
+
+    override suspend fun updateTaskById(taskModel: TaskModel) {
+        taskDao.updateTaskById(modelTaskToEntity(taskModel))
+    }
 }

@@ -36,6 +36,10 @@ abstract class BaseTaskDetailActivity : AppCompatActivity() {
     protected lateinit var taskTitle: String
     protected var taskDescription = "No description"
     protected var taskComplete = false
+    protected var taskImage = ""
+
+    //for validate if update task
+    protected var isNewTask = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +72,7 @@ abstract class BaseTaskDetailActivity : AppCompatActivity() {
         removeOption.setOnClickListener {
             binding.imageTask.visibility = View.GONE
             taskImageUri = null
+            taskImage = ""
             sheetBottomImageOptions.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
@@ -91,7 +96,7 @@ abstract class BaseTaskDetailActivity : AppCompatActivity() {
     }
 
     //Select image from gallery and Handle permissions
-    private fun selectImage() {
+    protected fun selectImage() {
         //check Android version
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             //check if permission not is granted
@@ -146,6 +151,7 @@ abstract class BaseTaskDetailActivity : AppCompatActivity() {
         binding.textTaskTittle.setText(taskModel.title)
         binding.textTaskBody.setText(taskModel.description)
         if(taskModel.image!!.isNotEmpty()) {
+            taskImage = taskModel.image!!
             binding.imageTask.visibility = View.VISIBLE
             Glide.with(this).load(taskModel.image).into(binding.imageTask)
         }
@@ -154,10 +160,12 @@ abstract class BaseTaskDetailActivity : AppCompatActivity() {
     //show progress bar
     protected fun showProgressBar() {
         binding.taskProgressBar.visibility = View.VISIBLE
+        binding.fabSaveTask.visibility = View.GONE
     }
 
     protected fun hideProgressBar() {
         binding.taskProgressBar.visibility = View.GONE
+        binding.fabSaveTask.visibility = View.VISIBLE
     }
 
 /// override methods
@@ -170,25 +178,12 @@ abstract class BaseTaskDetailActivity : AppCompatActivity() {
 
     //prepare menu options
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        //TODO: remove delete option when create new task
+        //remove delete option when create new task
+        if(isNewTask) menu?.removeItem(R.id.action_delete)
         return super.onPrepareOptionsMenu(menu)
     }
 
-    //listener menu options selected
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when (item.itemId) {
-            R.id.action_image -> {
-                selectImage()
-            }
-            R.id.action_delete -> {
-                //TODO: replace toast
-                Toast.makeText(this, "Delete task", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
 
 ///Handle permission for READ_EXTERNAL_STORAGE
 
@@ -227,5 +222,6 @@ abstract class BaseTaskDetailActivity : AppCompatActivity() {
             }
         }
     }
+
 
 }

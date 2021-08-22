@@ -10,13 +10,13 @@ import com.jcisneros.easyto.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlin.Exception
 
-class TaskDetailViewModel(private val repository: ITaskDetailRepo): ViewModel() {
+class TaskDetailViewModel(private val repository: ITaskDetailRepo) : ViewModel() {
 
-    fun saveTask(taskModel: TaskModel) = liveData(Dispatchers.IO){
+    fun saveTask(taskModel: TaskModel) = liveData(Dispatchers.IO) {
         emit(Resource.Loading())
         try {
             emit(repository.insertNewTask(taskModel))
-        }catch (e: Exception){
+        } catch (e: Exception) {
             emit(Resource.Failure(e))
             Log.e("VM-NEW-TASK", e.toString())
         }
@@ -26,15 +26,36 @@ class TaskDetailViewModel(private val repository: ITaskDetailRepo): ViewModel() 
         emit(Resource.Loading())
         try {
             emit(repository.getTaskById(taskId))
-        }catch (e: Exception){
+        } catch (e: Exception) {
             emit(Resource.Failure(e))
             Log.e("VM-GET-TASK", e.toString())
         }
     }
 
+    fun deleteTaskById(taskId: String) = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(repository.deleteTaskById(taskId))
+        } catch (e: Exception) {
+            emit(Resource.Failure(e))
+            Log.e("VM-DELETE-TASK", e.toString())
+        }
+    }
+
+    fun updateTaskById(taskId: String, taskModel: TaskModel) = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(repository.updateTaskById(taskId, taskModel))
+        } catch (e: Exception) {
+            emit(Resource.Failure(e))
+            Log.e("VM-UPDATE-TASK", e.toString())
+        }
+    }
+
 }
 
-class TaskDetailViewModelFactory(private val repository: ITaskDetailRepo): ViewModelProvider.Factory{
+class TaskDetailViewModelFactory(private val repository: ITaskDetailRepo) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return modelClass.getConstructor(ITaskDetailRepo::class.java).newInstance(repository)
     }

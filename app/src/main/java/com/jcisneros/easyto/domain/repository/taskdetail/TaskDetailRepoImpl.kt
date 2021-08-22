@@ -31,4 +31,34 @@ class TaskDetailRepoImpl(
     override suspend fun getTaskById(taskId: String): Resource<TaskModel> {
         return localDataSource.getTaskById(taskId)
     }
+
+    //delete task
+    override suspend fun deleteTaskById(taskId: String): Resource<Boolean> {
+        //1.- delete task on Firestore
+        when (val deleteFirebase = firebaseDataSource.deleteTaskById(taskId)) {
+            is Resource.Success -> {
+                if (deleteFirebase.data) {
+                    //2.- Delete task in local db
+                    localDataSource.deleteTaskById(taskId)
+                    return Resource.Success(true)
+                }
+            }
+        }
+        return Resource.Success(false)
+    }
+
+    //update task
+    override suspend fun updateTaskById(taskId: String, taskModel: TaskModel): Resource<Boolean> {
+        //1.- update task on firestore
+        when (val updateFirestore = firebaseDataSource.updateTaskById(taskId, taskModel)) {
+            is Resource.Success -> {
+                //2.- update task in local db
+                taskModel.image = updateFirestore.data[0] //url image task
+                taskModel.taskId = taskId
+                localDataSource.updateTaskById(taskModel)
+                return Resource.Success(true)
+            }
+        }
+        return Resource.Success(false)
+    }
 }
