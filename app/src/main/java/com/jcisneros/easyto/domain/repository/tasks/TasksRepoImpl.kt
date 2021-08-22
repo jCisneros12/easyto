@@ -44,6 +44,27 @@ class TasksRepoImpl(
             }
         }
 
+    override suspend fun getTaskComplete(): Flow<Resource<List<TaskModel>>> {
+        return localDataSource.getTaskComplete()
+    }
+
+    override suspend fun getTaskIncomplete(): Flow<Resource<List<TaskModel>>> {
+        return localDataSource.getTaskIncomplete()
+    }
+
+    //this method update task is complete or not
+    override suspend fun updateTaskComplete(taskId: String, isComplete: Boolean): Resource<Boolean> {
+    //1.- update on Firebase
+        when(firebaseDataSource.updateTaskComplete(taskId, isComplete)){
+            is Resource.Success ->{
+                //2.- update in local
+                localDataSource.updateTaskComplete(taskId, isComplete)
+                return Resource.Success(true)
+            }
+        }
+        return Resource.Success(false)
+    }
+
     //this method get tasks from local db only
     override suspend fun getLocalTasks(): Flow<Resource<List<TaskModel>>> =
         localDataSource.getAllTasks()

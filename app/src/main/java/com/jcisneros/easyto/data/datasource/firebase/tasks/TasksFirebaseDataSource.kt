@@ -9,16 +9,16 @@ import kotlinx.coroutines.tasks.await
 
 
 class TasksFirebaseDataSource {
-    // Access a Cloud Firestore instance
-    private val db = Firebase.firestore
+    //document reference
+    private val docReference = Firebase.firestore.collection("users")
+        .document("0yZhV7yRuzKUiJplmZ2V").collection("tasks")
 
     suspend fun getTasks(): Resource<List<TaskModel>> {
         //list of task
         val arrayTask = mutableListOf<TaskModel>()
 
         //document reference //TODO: change document for userId logged
-        val resultData = db.collection("users")
-            .document("0yZhV7yRuzKUiJplmZ2V").collection("tasks").get().await()
+        val resultData = docReference.get().await()
 
         //fetch firebase data
         resultData.forEach { document ->
@@ -34,5 +34,19 @@ class TasksFirebaseDataSource {
         }
 
         return Resource.Success(arrayTask)
+    }
+
+    //method for update task (if complete or not)
+    suspend fun updateTaskComplete(idTask: String, isComplete: Boolean): Resource<Boolean> {
+        //data to update on Firestore
+        val taskComplete: Map<String, Any?> = hashMapOf("isComplete" to isComplete)
+        //try update task data
+        val resultData = docReference.document(idTask).update(taskComplete).await()
+        //return true if success
+        return if (resultData != null) {
+            Resource.Failure(Exception("Error to Update Task in Firebase"))
+        } else {
+            Resource.Success(true)
+        }
     }
 }

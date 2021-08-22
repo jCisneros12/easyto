@@ -24,6 +24,43 @@ class TasksViewModel(private val repository: ITasksRepo): ViewModel() {
         }
     }
 
+    //for get all task complete
+    val taskCompleteList = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            repository.getTaskComplete().collect { tasks ->
+                emit(tasks)
+            }
+        }catch (e: Exception){
+            emit(Resource.Failure(e))
+            Log.e("ERROR-TASKS", e.toString())
+        }
+    }
+
+    //for get all task incomplete
+    val taskIncompleteList = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            repository.getTaskIncomplete().collect { tasks ->
+                emit(tasks)
+            }
+        }catch (e: Exception){
+            emit(Resource.Failure(e))
+            Log.e("ERROR-TASKS", e.toString())
+        }
+    }
+
+    //method for change "task state" to complete or not
+    fun completeTask(taskId: String, isComplete: Boolean) = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(repository.updateTaskComplete(taskId, isComplete))
+        }catch (e: Exception){
+            emit(Resource.Failure(e))
+            Log.e("ERROR-TASK-COMPLETE", e.toString())
+        }
+    }
+
 }
 
 class TasksViewModelFactory(private val repository: ITasksRepo): ViewModelProvider.Factory{

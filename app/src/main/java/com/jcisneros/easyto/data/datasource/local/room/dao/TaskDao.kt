@@ -9,6 +9,12 @@ interface TaskDao {
     @Query("SELECT * FROM task_table")
     fun getAllTasks(): Flow<List<TaskEntity>>
 
+    @Query("SELECT * FROM task_table WHERE is_complete=:isComplete")
+    fun getTaskComplete(isComplete: Boolean = true): Flow<List<TaskEntity>>
+
+    @Query("SELECT * FROM task_table WHERE is_complete=:isComplete")
+    fun getTaskIncomplete(isComplete: Boolean = false): Flow<List<TaskEntity>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTask(taskEntity: TaskEntity)
 

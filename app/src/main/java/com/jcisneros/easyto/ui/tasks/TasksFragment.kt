@@ -3,10 +3,8 @@ package com.jcisneros.easyto.ui.tasks
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,17 +37,19 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
         )
     }
 
-
     //Recycler view adapter
     private val adapter: TasksAdapter by lazy {
         TasksAdapter(requireContext(), this)
     }
+
+    private lateinit var tasksList: List<TaskModel>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTasksBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -72,7 +72,8 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
                 }
                 is Resource.Success -> {
                     binding.tasksProgressBar.visibility = View.GONE
-                    adapter.setListData(tasks.data)
+                    tasksList = tasks.data
+                    adapter.setListData(tasksList)
                     if (tasks.data.isEmpty()) binding.txtEmptyTasks.visibility = View.VISIBLE
                     else binding.txtEmptyTasks.visibility = View.GONE
                     adapter.notifyDataSetChanged()
@@ -87,11 +88,60 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
         })
     }
 
+    private fun getTaskIncomplete(){
+        viewModel.taskIncompleteList.observe(viewLifecycleOwner, { tasks ->
+            when (tasks) {
+                is Resource.Loading -> {
+                    binding.tasksProgressBar.visibility = View.VISIBLE
+                }
+                is Resource.Success -> {
+                    binding.tasksProgressBar.visibility = View.GONE
+                    tasksList = tasks.data
+                    adapter.setListData(tasksList)
+                    if (tasks.data.isEmpty()) binding.txtEmptyTasks.visibility = View.VISIBLE
+                    else binding.txtEmptyTasks.visibility = View.GONE
+                    adapter.notifyDataSetChanged()
+                    Toast.makeText(requireContext(), "incomplete: ${tasks.data.size}", Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Failure -> {
+                    Toast.makeText(requireContext(), "Ocurrio un problema", Toast.LENGTH_SHORT)
+                        .show()
+                    Log.e("TASKS-ERR", "ocurrio un error: ${tasks.exception}")
+                }
+            }
+        })
+    }
+
+    private fun getTaskComplete(){
+        viewModel.taskCompleteList.observe(viewLifecycleOwner, { tasks ->
+            when (tasks) {
+                is Resource.Loading -> {
+                    binding.tasksProgressBar.visibility = View.VISIBLE
+                }
+                is Resource.Success -> {
+                    binding.tasksProgressBar.visibility = View.GONE
+                    tasksList = tasks.data
+                    adapter.setListData(tasksList)
+                    if (tasks.data.isEmpty()) binding.txtEmptyTasks.visibility = View.VISIBLE
+                    else binding.txtEmptyTasks.visibility = View.GONE
+                    adapter.notifyDataSetChanged()
+                    Toast.makeText(requireContext(), "complete: ${tasks.data.size}", Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Failure -> {
+                    Toast.makeText(requireContext(), "Ocurrio un problema", Toast.LENGTH_SHORT)
+                        .show()
+                    Log.e("TASKS-ERR", "ocurrio un error: ${tasks.exception}")
+                }
+            }
+        })
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    /// Recyclerview methods
     //onClick method for recycler items
     override fun onEditClick(taskModel: TaskModel) {
         val intent = Intent(requireContext(), TaskDetailActivity::class.java)
@@ -99,4 +149,37 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
         intent.putExtra(requireContext().getString(R.string.task_id), taskModel.taskId)
         startActivity(intent)
     }
+
+    //when click in checkbox, task is complete or vice versa
+    override fun onCompleteTask(task: TaskModel) {
+        viewModel.completeTask(task.taskId, !task.isComplete).observe(requireActivity(), {
+            when (it) {
+                is Resource.Failure -> {
+                    Toast.makeText(
+                        requireContext(), requireContext().getString(R.string.error_msg),
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    ///Menu options for app bar
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_task_complete ->{
+                //getTaskComplete()
+            }
+            R.id.action_tasks_incomplete ->{
+                //getTaskIncomplete()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }

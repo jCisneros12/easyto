@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collect
 
+@ExperimentalCoroutinesApi
 class TasksLocalDataSource(private val taskDao: TaskDao) : ITasksDataSource {
 
     //method to get tasks from local DB
-    @ExperimentalCoroutinesApi
     override suspend fun getAllTasks(): Flow<Resource<List<TaskModel>>> {
         return callbackFlow {
             trySend(Resource.Loading())
@@ -46,6 +46,33 @@ class TasksLocalDataSource(private val taskDao: TaskDao) : ITasksDataSource {
     override suspend fun insertTask(taskEntity: TaskEntity): Resource<Boolean> {
         taskDao.insertTask(taskEntity)
         return Resource.Success(true)
+    }
+
+
+    override suspend fun getTaskComplete(): Flow<Resource<List<TaskModel>>>{
+        return callbackFlow {
+            trySend(Resource.Loading())
+            taskDao.getTaskComplete().collect {
+                val listTask = toTaskModel(it)
+                trySend(Resource.Success(listTask))
+            }
+            awaitClose { cancel() }
+        }
+    }
+
+    override suspend fun getTaskIncomplete(): Flow<Resource<List<TaskModel>>> {
+        return callbackFlow {
+            trySend(Resource.Loading())
+            taskDao.getTaskIncomplete().collect {
+                val listTask = toTaskModel(it)
+                trySend(Resource.Success(listTask))
+            }
+            awaitClose { cancel() }
+        }
+    }
+
+    override suspend fun updateTaskComplete(taskId: String, isComplete: Boolean) {
+        taskDao.updateTaskComplete(taskId, isComplete)
     }
 
 }

@@ -41,4 +41,6 @@
     <string name="update_success">Actualizado</string>
     <string name="update_failure">No se pudo actualizar</string>
     <string name="error_msg">Ocurrió un problema</string>
+    <string name="task_complete">Tarea completada</string>
+    <string name="action_logout">Cerrar sesión</string>
 </resources>

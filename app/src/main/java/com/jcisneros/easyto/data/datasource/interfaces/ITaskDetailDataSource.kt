@@ -2,6 +2,7 @@ package com.jcisneros.easyto.data.datasource.interfaces
 
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.utils.Resource
+import kotlinx.coroutines.flow.Flow
 
 interface ITaskDetailDataSource {
 

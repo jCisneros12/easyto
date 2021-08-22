@@ -9,4 +9,7 @@ interface ITasksDataSource {
     suspend fun getAllTasks(): Flow<Resource<List<TaskModel>>>
     suspend fun insertTask(taskEntity: TaskEntity): Resource<Boolean>
     suspend fun insertTasks(data: Resource<List<TaskModel>>)
+    suspend fun getTaskComplete(): Flow<Resource<List<TaskModel>>>
+    suspend fun getTaskIncomplete(): Flow<Resource<List<TaskModel>>>
+    suspend fun updateTaskComplete(taskId: String, isComplete: Boolean)
 }

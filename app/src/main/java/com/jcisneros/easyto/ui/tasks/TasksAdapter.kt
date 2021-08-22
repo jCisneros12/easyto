@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jcisneros.easyto.data.model.TaskModel
@@ -44,7 +45,8 @@ class TasksAdapter(
     //interface for implements onClick methods
     interface OnCategoryClickListener{
         fun onEditClick(taskModel: TaskModel)
-        //add more methods here
+        fun onCompleteTask(task: TaskModel)
+        //add more methods here...
     }
 
     inner class TasksViewHolder(
@@ -53,6 +55,7 @@ class TasksAdapter(
         fun bindView(task: TaskModel) {
             //onClick listeners
             binding.textTaskTittleCard.setOnClickListener { itemClickListener.onEditClick(task) }
+            binding.checkTask.setOnClickListener { itemClickListener.onCompleteTask(task) }
             //set data to item view
             binding.textTaskTittleCard.text = task.title
             binding.checkTask.isChecked = task.isComplete

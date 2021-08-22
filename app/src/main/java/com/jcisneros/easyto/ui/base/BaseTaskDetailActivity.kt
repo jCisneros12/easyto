@@ -46,6 +46,7 @@ abstract class BaseTaskDetailActivity : AppCompatActivity() {
         binding = ActivityTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
         title = ""
+        onSupportNavigateUp()
 
         //image option bottom sheet dialog
         val cardView = findViewById<CardView>(R.id.sheet_bottom_image_options)
