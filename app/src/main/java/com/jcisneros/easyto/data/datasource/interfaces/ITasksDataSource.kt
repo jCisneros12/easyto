@@ -12,4 +12,5 @@ interface ITasksDataSource {
     suspend fun getTaskComplete(): Flow<Resource<List<TaskModel>>>
     suspend fun getTaskIncomplete(): Flow<Resource<List<TaskModel>>>
     suspend fun updateTaskComplete(taskId: String, isComplete: Boolean)
+    suspend fun deleteAllTask()
 }

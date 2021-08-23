@@ -1,23 +1,24 @@
 package com.jcisneros.easyto.data.datasource.firebase.tasks
 
-import android.content.Context
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.jcisneros.easyto.EasytoApplication
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.utils.Resource
 import kotlinx.coroutines.tasks.await
 
 
 class TasksFirebaseDataSource {
+    private val userPath = EasytoApplication.authPrefs.getUserId(EasytoApplication.prefsInstance)
     //document reference
     private val docReference = Firebase.firestore.collection("users")
-        .document("0yZhV7yRuzKUiJplmZ2V").collection("tasks")
+        .document(userPath).collection("tasks")
 
     suspend fun getTasks(): Resource<List<TaskModel>> {
         //list of task
         val arrayTask = mutableListOf<TaskModel>()
 
-        //document reference //TODO: change document for userId logged
+        //document reference
         val resultData = docReference.get().await()
 
         //fetch firebase data

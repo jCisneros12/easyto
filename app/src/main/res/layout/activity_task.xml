@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/body_theme"
-    tools:context=".ui.taskdetail.TaskDetailActivity">
+    tools:context=".presentation.taskdetail.TaskDetailActivity">
 
     <ProgressBar
         android:id="@+id/task_progress_bar"

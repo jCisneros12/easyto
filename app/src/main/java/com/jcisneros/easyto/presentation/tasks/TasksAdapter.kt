@@ -1,11 +1,9 @@
-package com.jcisneros.easyto.ui.tasks
+package com.jcisneros.easyto.presentation.tasks
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jcisneros.easyto.data.model.TaskModel

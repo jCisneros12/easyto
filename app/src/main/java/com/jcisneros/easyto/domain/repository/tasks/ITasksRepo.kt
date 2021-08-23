@@ -10,4 +10,5 @@ interface ITasksRepo {
     suspend fun updateTaskComplete(taskId: String, isComplete: Boolean): Resource<Boolean>
     suspend fun getTaskComplete(): Flow<Resource<List<TaskModel>>>
     suspend fun getTaskIncomplete(): Flow<Resource<List<TaskModel>>>
+    suspend fun deleteAllTask(): Resource<Boolean>
 }

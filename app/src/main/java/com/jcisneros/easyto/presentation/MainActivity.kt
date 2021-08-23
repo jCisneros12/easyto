@@ -1,18 +1,15 @@
-package com.jcisneros.easyto.ui
+package com.jcisneros.easyto.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import com.jcisneros.easyto.R
 import com.jcisneros.easyto.databinding.ActivityMainBinding
-import com.jcisneros.easyto.ui.taskdetail.TaskDetailActivity
+import com.jcisneros.easyto.presentation.taskdetail.TaskDetailActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,12 +31,6 @@ class MainActivity : AppCompatActivity() {
         binding.fabAddTask.setOnClickListener {
             startActivity(Intent(this, TaskDetailActivity::class.java))
         }
-
-        //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.menu_main, menu)
-//        return true
-//    }
 
     }
 

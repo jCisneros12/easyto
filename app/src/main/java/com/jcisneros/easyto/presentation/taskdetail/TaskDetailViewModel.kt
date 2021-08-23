@@ -1,4 +1,4 @@
-package com.jcisneros.easyto.ui.taskdetail
+package com.jcisneros.easyto.presentation.taskdetail
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

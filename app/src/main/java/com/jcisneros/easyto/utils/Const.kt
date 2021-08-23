@@ -5,5 +5,8 @@ object Const {
     const val EASYTO_DATABASE_NAME = "easyto_database"
     const val EASYTO_DATABASE_VERSION = 1
 
-    //firebase constants
+    //shared prefs
+    const val SHARED_PREFS = "easyto_shared_prefs"
+    const val SHARED_USER_ID = "userID"
+
 }

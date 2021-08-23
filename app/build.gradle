@@ -81,6 +81,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage'
     // Dependency for firebase auth
     implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
 
     //Test dependencies
     testImplementation 'junit:junit:4.+'

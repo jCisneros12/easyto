@@ -1,4 +1,4 @@
-package com.jcisneros.easyto.ui.base
+package com.jcisneros.easyto.presentation.base
 
 import android.Manifest
 import android.content.Intent
@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast

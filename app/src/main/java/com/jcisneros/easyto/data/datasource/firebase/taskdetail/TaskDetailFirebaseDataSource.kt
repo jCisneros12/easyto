@@ -2,15 +2,16 @@ package com.jcisneros.easyto.data.datasource.firebase.taskdetail
 
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.jcisneros.easyto.EasytoApplication
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.utils.Resource
 import kotlinx.coroutines.tasks.await
 
 class TaskDetailFirebaseDataSource {
-
+    private val userPath = EasytoApplication.authPrefs.getUserId(EasytoApplication.prefsInstance)
     //document reference
     private val docReference = Firebase.firestore.collection("users")
-        .document("0yZhV7yRuzKUiJplmZ2V").collection("tasks")
+        .document(userPath).collection("tasks")
     //url image task
     private var imageUrl: String = ""
     //for get id and url image of task
@@ -19,7 +20,6 @@ class TaskDetailFirebaseDataSource {
     lateinit var taskMap: Map<String, Any?>
 
     //return url image and id
-    // TODO: change data from user auth
     suspend fun setNewTask(task: TaskModel): Resource<List<String>> {
         //1.- Upload task image if not null
         if (task.imageUri != null) imageUrl = ImageFirebaseDataSource().uploadImage(task.imageUri)

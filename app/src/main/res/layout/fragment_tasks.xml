@@ -8,7 +8,7 @@
     android:paddingHorizontal="20dp"
     android:orientation="vertical"
     style="@style/body_theme"
-    tools:context=".ui.tasks.TasksFragment">
+    tools:context=".presentation.tasks.TasksFragment">
 
 
 

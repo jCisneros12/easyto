@@ -2,24 +2,22 @@ package com.jcisneros.easyto
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
+import com.jcisneros.easyto.utils.UserAuthPrefs
 
 open class EasytoApplication: Application() {
 
-    init {
-        instance = this
+    //Shared Prefs
+    companion object{
+        //for get instance from auth prefs
+        lateinit var authPrefs: UserAuthPrefs
+        lateinit var prefsInstance: SharedPreferences
     }
 
-    companion object {
-        private var instance: EasytoApplication? = null
-
-        fun applicationContext() : Context {
-            return instance!!.applicationContext
-        }
+    override fun onCreate() {
+        super.onCreate()
+        authPrefs = UserAuthPrefs()
+        prefsInstance = UserAuthPrefs().getSharedPreference(applicationContext)
     }
-
-//    override fun onCreate() {
-//        super.onCreate()
-//        val context = applicationContext()
-//    }
 
 }

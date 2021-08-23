@@ -1,4 +1,4 @@
-package com.jcisneros.easyto.ui.tasks
+package com.jcisneros.easyto.presentation.tasks
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,9 +8,9 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jcisneros.easyto.EasytoApplication
 import com.jcisneros.easyto.R
 import com.jcisneros.easyto.data.datasource.local.room.database.EasytoRoomDataBase
 import com.jcisneros.easyto.data.datasource.local.tasks.TasksLocalDataSource
@@ -18,7 +18,9 @@ import com.jcisneros.easyto.data.datasource.firebase.tasks.TasksFirebaseDataSour
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.databinding.FragmentTasksBinding
 import com.jcisneros.easyto.domain.repository.tasks.TasksRepoImpl
-import com.jcisneros.easyto.ui.taskdetail.TaskDetailActivity
+import com.jcisneros.easyto.presentation.MainActivity
+import com.jcisneros.easyto.presentation.login.LoginActivity
+import com.jcisneros.easyto.presentation.taskdetail.TaskDetailActivity
 import com.jcisneros.easyto.utils.Resource
 
 
@@ -68,11 +70,19 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
 
         //set search task method
         binding.editTxtSearch.addTextChangedListener(
-            object: TextWatcher {
+            object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     searchTask(s.toString())
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             }
         )
@@ -103,11 +113,11 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
         })
     }
 
-    private fun searchTask(title: String){
+    private fun searchTask(title: String) {
         val searchLit = mutableListOf<TaskModel>()
-        if(tasksList.isNotEmpty()){
+        if (tasksList.isNotEmpty()) {
             tasksList.forEach { task ->
-                if(task.title!!.lowercase().contains(title.lowercase()))
+                if (task.title!!.lowercase().contains(title.lowercase()))
                     searchLit.add(task)
             }
             adapter.setListData(searchLit)
@@ -115,6 +125,11 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
         }
     }
 
+    private fun logout() {
+        EasytoApplication.authPrefs.removeUserId(EasytoApplication.prefsInstance)
+        startActivity(Intent(requireContext(), LoginActivity::class.java))
+        activity?.finish()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -137,7 +152,8 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
                 is Resource.Failure -> {
                     Toast.makeText(
                         requireContext(), requireContext().getString(R.string.error_msg),
-                        Toast.LENGTH_SHORT).show()
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })
@@ -152,11 +168,8 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_task_complete ->{
-                //getTaskComplete()
-            }
-            R.id.action_tasks_incomplete ->{
-                //getTaskIncomplete()
+            R.id.action_logout -> {
+                logout()
             }
         }
         return super.onOptionsItemSelected(item)

@@ -75,4 +75,7 @@ class TasksLocalDataSource(private val taskDao: TaskDao) : ITasksDataSource {
         taskDao.updateTaskComplete(taskId, isComplete)
     }
 
+    override suspend fun deleteAllTask() {
+        taskDao.deleteAllTask()
+    }
 }

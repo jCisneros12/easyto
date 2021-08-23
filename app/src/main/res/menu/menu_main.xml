@@ -1,17 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.jcisneros.easyto.ui.MainActivity">
-    <item
-        android:id="@+id/action_task_complete"
-        android:orderInCategory="100"
-        android:title="@string/action_task_complete"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_tasks_incomplete"
-        android:orderInCategory="100"
-        android:title="@string/action_tasks"
-        app:showAsAction="never" />
+    tools:context="com.jcisneros.easyto.presentation.MainActivity">
+<!--    <item-->
+<!--        android:id="@+id/action_task_complete"-->
+<!--        android:orderInCategory="100"-->
+<!--        android:title="@string/action_task_complete"-->
+<!--        app:showAsAction="never" />-->
+<!--    <item-->
+<!--        android:id="@+id/action_tasks_incomplete"-->
+<!--        android:orderInCategory="100"-->
+<!--        android:title="@string/action_tasks"-->
+<!--        app:showAsAction="never" />-->
 
     <item
         android:id="@+id/action_logout"

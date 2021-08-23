@@ -1,4 +1,4 @@
-package com.jcisneros.easyto.ui.taskdetail
+package com.jcisneros.easyto.presentation.taskdetail
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -10,7 +10,7 @@ import com.jcisneros.easyto.data.datasource.local.room.database.EasytoRoomDataBa
 import com.jcisneros.easyto.data.datasource.local.taskdetail.TaskDetailLocalDataSource
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.domain.repository.taskdetail.TaskDetailRepoImpl
-import com.jcisneros.easyto.ui.base.BaseTaskDetailActivity
+import com.jcisneros.easyto.presentation.base.BaseTaskDetailActivity
 import com.jcisneros.easyto.utils.Resource
 
 /*

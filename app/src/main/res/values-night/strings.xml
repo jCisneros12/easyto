@@ -43,4 +43,8 @@
     <string name="error_msg">Ocurrió un problema</string>
     <string name="task_complete">Tarea completada</string>
     <string name="action_logout">Cerrar sesión</string>
+    <string name="required_email">Debe ingresar su correo</string>
+    <string name="required_password">Debe ingresar su contraseña</string>
+    <string name="login_fail">Correo o contraseña incorrectos</string>
+    <string name="register_success">¡Registro exitoso!</string>
 </resources>

@@ -65,6 +65,12 @@ class TasksRepoImpl(
         return Resource.Success(false)
     }
 
+    //delete all tasks in local db
+    override suspend fun deleteAllTask(): Resource<Boolean> {
+        localDataSource.deleteAllTask()
+        return Resource.Success(true)
+    }
+
     //this method get tasks from local db only
     override suspend fun getLocalTasks(): Flow<Resource<List<TaskModel>>> =
         localDataSource.getAllTasks()
