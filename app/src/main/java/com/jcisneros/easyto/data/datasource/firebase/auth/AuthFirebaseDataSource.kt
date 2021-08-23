@@ -56,12 +56,6 @@ class AuthFirebaseDataSource : IAuthDataSource {
             Resource.Failure(Exception("Error to create user data"))
         }
         else{
-//            docRef.document(userModel.userId).collection("tasks").add(
-//                hashMapOf(
-//                    "title" to "Example task",
-//                    "description" to "Example description",
-//                    "image" to "",
-//                    "isComplete" to false)).await()
             Resource.Success(true)
         }
         return Resource.Failure(Exception("Error to create user"))
