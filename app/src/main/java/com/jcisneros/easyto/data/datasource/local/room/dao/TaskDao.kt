@@ -33,4 +33,7 @@ interface TaskDao {
     @Query("UPDATE task_table SET is_complete=:isComplete WHERE task_id=:taskId")
     suspend fun updateTaskComplete(taskId: String, isComplete: Boolean)
 
+    @Query("SELECT * FROM task_table WHERE title LIKE :taskTitle")
+    fun getTaskByTitle(taskTitle: String): Flow<List<TaskEntity>>
+
 }

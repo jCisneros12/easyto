@@ -2,10 +2,13 @@ package com.jcisneros.easyto.ui.tasks
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jcisneros.easyto.R
@@ -42,7 +45,7 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
         TasksAdapter(requireContext(), this)
     }
 
-    private lateinit var tasksList: List<TaskModel>
+    private var tasksList = listOf<TaskModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +63,19 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
         binding.recyclerTasks.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerTasks.adapter = adapter
 
+        //observe task list
         observeTasks()
+
+        //set search task method
+        binding.editTxtSearch.addTextChangedListener(
+            object: TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    searchTask(s.toString())
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            }
+        )
 
     }
 
@@ -88,53 +103,18 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
         })
     }
 
-    private fun getTaskIncomplete(){
-        viewModel.taskIncompleteList.observe(viewLifecycleOwner, { tasks ->
-            when (tasks) {
-                is Resource.Loading -> {
-                    binding.tasksProgressBar.visibility = View.VISIBLE
-                }
-                is Resource.Success -> {
-                    binding.tasksProgressBar.visibility = View.GONE
-                    tasksList = tasks.data
-                    adapter.setListData(tasksList)
-                    if (tasks.data.isEmpty()) binding.txtEmptyTasks.visibility = View.VISIBLE
-                    else binding.txtEmptyTasks.visibility = View.GONE
-                    adapter.notifyDataSetChanged()
-                    Toast.makeText(requireContext(), "incomplete: ${tasks.data.size}", Toast.LENGTH_SHORT).show()
-                }
-                is Resource.Failure -> {
-                    Toast.makeText(requireContext(), "Ocurrio un problema", Toast.LENGTH_SHORT)
-                        .show()
-                    Log.e("TASKS-ERR", "ocurrio un error: ${tasks.exception}")
-                }
+    private fun searchTask(title: String){
+        val searchLit = mutableListOf<TaskModel>()
+        if(tasksList.isNotEmpty()){
+            tasksList.forEach { task ->
+                if(task.title!!.lowercase().contains(title.lowercase()))
+                    searchLit.add(task)
             }
-        })
+            adapter.setListData(searchLit)
+            adapter.notifyDataSetChanged()
+        }
     }
 
-    private fun getTaskComplete(){
-        viewModel.taskCompleteList.observe(viewLifecycleOwner, { tasks ->
-            when (tasks) {
-                is Resource.Loading -> {
-                    binding.tasksProgressBar.visibility = View.VISIBLE
-                }
-                is Resource.Success -> {
-                    binding.tasksProgressBar.visibility = View.GONE
-                    tasksList = tasks.data
-                    adapter.setListData(tasksList)
-                    if (tasks.data.isEmpty()) binding.txtEmptyTasks.visibility = View.VISIBLE
-                    else binding.txtEmptyTasks.visibility = View.GONE
-                    adapter.notifyDataSetChanged()
-                    Toast.makeText(requireContext(), "complete: ${tasks.data.size}", Toast.LENGTH_SHORT).show()
-                }
-                is Resource.Failure -> {
-                    Toast.makeText(requireContext(), "Ocurrio un problema", Toast.LENGTH_SHORT)
-                        .show()
-                    Log.e("TASKS-ERR", "ocurrio un error: ${tasks.exception}")
-                }
-            }
-        })
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
