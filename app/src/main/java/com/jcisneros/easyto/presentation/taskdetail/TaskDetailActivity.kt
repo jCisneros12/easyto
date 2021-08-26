@@ -6,30 +6,28 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.jcisneros.easyto.R
 import com.jcisneros.easyto.data.datasource.firebase.taskdetail.TaskDetailFirebaseDataSource
+import com.jcisneros.easyto.data.datasource.local.room.dao.TaskDao
 import com.jcisneros.easyto.data.datasource.local.room.database.EasytoRoomDataBase
 import com.jcisneros.easyto.data.datasource.local.taskdetail.TaskDetailLocalDataSource
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.domain.repository.taskdetail.TaskDetailRepoImpl
 import com.jcisneros.easyto.presentation.base.BaseTaskDetailActivity
 import com.jcisneros.easyto.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /*
 * All ui logic is in BaseTaskDetailActivity
 * */
 
+@AndroidEntryPoint
 class TaskDetailActivity : BaseTaskDetailActivity() {
 
+     @Inject
+     lateinit var taskDao: TaskDao
+
     //ViewModel
-    private val viewModel by viewModels<TaskDetailViewModel> {
-        TaskDetailViewModelFactory(
-            TaskDetailRepoImpl(
-                TaskDetailFirebaseDataSource(),
-                TaskDetailLocalDataSource(
-                    EasytoRoomDataBase.getDataBase(this.applicationContext).taskDao()
-                )
-            )
-        )
-    }
+    private val viewModel by viewModels<TaskDetailViewModel>()
 
     //for task id
     private lateinit var taskId: String

@@ -7,9 +7,10 @@ import com.google.firebase.ktx.Firebase
 import com.jcisneros.easyto.data.model.UserModel
 import com.jcisneros.easyto.utils.Resource
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
 
-class AuthFirebaseDataSource : IAuthDataSource {
+class AuthFirebaseDataSource @Inject constructor() : IAuthDataSource {
 
     private lateinit var auth: FirebaseAuth
 

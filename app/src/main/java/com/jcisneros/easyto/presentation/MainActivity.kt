@@ -10,7 +10,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.jcisneros.easyto.R
 import com.jcisneros.easyto.databinding.ActivityMainBinding
 import com.jcisneros.easyto.presentation.taskdetail.TaskDetailActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration

@@ -6,8 +6,9 @@ import com.jcisneros.easyto.data.datasource.firebase.auth.IAuthDataSource
 import com.jcisneros.easyto.data.datasource.local.auth.IAuthLocalDataSource
 import com.jcisneros.easyto.data.model.UserModel
 import com.jcisneros.easyto.utils.Resource
+import javax.inject.Inject
 
-class AuthRepoImpl(
+class AuthRepoImpl @Inject constructor(
     private val datasource: IAuthDataSource,
     private val localDataSource: IAuthLocalDataSource
 ) : IAuthRepo {

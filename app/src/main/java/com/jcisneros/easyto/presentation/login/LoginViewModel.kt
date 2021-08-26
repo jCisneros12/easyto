@@ -6,10 +6,13 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.jcisneros.easyto.domain.repository.auth.IAuthRepo
 import com.jcisneros.easyto.utils.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(private val repository: IAuthRepo) : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val repository: IAuthRepo) : ViewModel() {
 
     fun loginWithEmailPassword(email: String, password: String) = liveData(Dispatchers.IO) {
         emit(Resource.Loading())

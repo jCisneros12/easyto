@@ -4,8 +4,9 @@ import com.jcisneros.easyto.data.datasource.firebase.taskdetail.TaskDetailFireba
 import com.jcisneros.easyto.data.datasource.interfaces.ITaskDetailDataSource
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.utils.Resource
+import javax.inject.Inject
 
-class TaskDetailRepoImpl(
+class TaskDetailRepoImpl @Inject constructor(
     private val firebaseDataSource: TaskDetailFirebaseDataSource,
     private val localDataSource: ITaskDetailDataSource,
 ) : ITaskDetailRepo {

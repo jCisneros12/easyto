@@ -7,10 +7,13 @@ import androidx.lifecycle.liveData
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.domain.repository.taskdetail.ITaskDetailRepo
 import com.jcisneros.easyto.utils.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 import kotlin.Exception
 
-class TaskDetailViewModel(private val repository: ITaskDetailRepo) : ViewModel() {
+@HiltViewModel
+class TaskDetailViewModel @Inject constructor(private val repository: ITaskDetailRepo) : ViewModel() {
 
     fun saveTask(taskModel: TaskModel) = liveData(Dispatchers.IO) {
         emit(Resource.Loading())
@@ -52,11 +55,4 @@ class TaskDetailViewModel(private val repository: ITaskDetailRepo) : ViewModel()
         }
     }
 
-}
-
-class TaskDetailViewModelFactory(private val repository: ITaskDetailRepo) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(ITaskDetailRepo::class.java).newInstance(repository)
-    }
 }

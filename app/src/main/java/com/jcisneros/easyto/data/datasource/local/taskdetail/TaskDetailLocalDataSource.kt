@@ -13,8 +13,9 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
-class TaskDetailLocalDataSource(private val taskDao: TaskDao): ITaskDetailDataSource {
+class TaskDetailLocalDataSource @Inject constructor(private val taskDao: TaskDao): ITaskDetailDataSource {
 
     override suspend fun insertNewTask(taskModel: TaskModel){
         val taskEntity = modelTaskToEntity(taskModel)

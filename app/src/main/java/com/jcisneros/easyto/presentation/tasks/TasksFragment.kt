@@ -12,14 +12,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jcisneros.easyto.EasytoApplication
 import com.jcisneros.easyto.R
-import com.jcisneros.easyto.data.datasource.local.room.database.EasytoRoomDataBase
-import com.jcisneros.easyto.data.datasource.local.tasks.TasksLocalDataSource
-import com.jcisneros.easyto.data.datasource.firebase.tasks.TasksFirebaseDataSource
 import com.jcisneros.easyto.data.datasource.local.room.dao.TaskDao
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.databinding.FragmentTasksBinding
-import com.jcisneros.easyto.domain.repository.tasks.TasksRepoImpl
-import com.jcisneros.easyto.presentation.MainActivity
 import com.jcisneros.easyto.presentation.login.LoginActivity
 import com.jcisneros.easyto.presentation.taskdetail.TaskDetailActivity
 import com.jcisneros.easyto.utils.Resource
@@ -41,16 +36,6 @@ class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
     //ViewModel
     @ExperimentalCoroutinesApi
     private val viewModel by viewModels<TasksViewModel>()
-//    {TODO: delete this
-//        TasksViewModelFactory(
-//            TasksRepoImpl(
-//                TasksLocalDataSource(
-//                    EasytoRoomDataBase.getDataBase(requireContext().applicationContext).taskDao()
-//                ),
-//                TasksFirebaseDataSource()
-//            )
-//        )
-//    }
 
     //Recycler view adapter
     private val adapter: TasksAdapter by lazy {

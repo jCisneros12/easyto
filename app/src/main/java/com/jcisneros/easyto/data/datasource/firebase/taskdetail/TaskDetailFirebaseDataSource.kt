@@ -6,8 +6,9 @@ import com.jcisneros.easyto.EasytoApplication
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.utils.Resource
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class TaskDetailFirebaseDataSource {
+class TaskDetailFirebaseDataSource @Inject constructor() {
     private val userPath = EasytoApplication.authPrefs.getUserId(EasytoApplication.prefsInstance)
     //document reference
     private val docReference = Firebase.firestore.collection("users")

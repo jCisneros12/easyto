@@ -6,29 +6,31 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.jcisneros.easyto.EasytoApplication
 import com.jcisneros.easyto.R
 import com.jcisneros.easyto.data.datasource.firebase.auth.AuthFirebaseDataSource
 import com.jcisneros.easyto.data.datasource.local.auth.AuthLocalDataSourceImpl
+import com.jcisneros.easyto.data.datasource.local.room.dao.TaskDao
 import com.jcisneros.easyto.data.datasource.local.room.database.EasytoRoomDataBase
 import com.jcisneros.easyto.databinding.ActivityLoginBinding
 import com.jcisneros.easyto.domain.repository.auth.AuthRepoImpl
 import com.jcisneros.easyto.presentation.MainActivity
 import com.jcisneros.easyto.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     //View Binding
     private lateinit var binding: ActivityLoginBinding
 
+    @Inject
+    lateinit var taskDao: TaskDao
+
     //ViewModel
-    private val viewModel by lazy {
-        LoginViewModel(
-            AuthRepoImpl(AuthFirebaseDataSource(), AuthLocalDataSourceImpl(
-                EasytoRoomDataBase.getDataBase(this.applicationContext).taskDao()
-            ))
-        )
-    }
+    private val viewModel by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
