@@ -4,8 +4,10 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.jcisneros.easyto.utils.UserAuthPrefs
+import dagger.hilt.android.HiltAndroidApp
 
-open class EasytoApplication: Application() {
+@HiltAndroidApp
+class EasytoApplication: Application() {
 
     //Shared Prefs
     companion object{

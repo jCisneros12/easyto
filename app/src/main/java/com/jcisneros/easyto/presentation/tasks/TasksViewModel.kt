@@ -1,17 +1,21 @@
 package com.jcisneros.easyto.presentation.tasks
 
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.jcisneros.easyto.domain.repository.tasks.ITasksRepo
 import com.jcisneros.easyto.utils.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TasksViewModel(private val repository: ITasksRepo): ViewModel() {
+@HiltViewModel
+class TasksViewModel @Inject constructor(private val repository: ITasksRepo): ViewModel() {
 
     //list with tasks
     val taskList = liveData(Dispatchers.IO) {
@@ -48,10 +52,4 @@ class TasksViewModel(private val repository: ITasksRepo): ViewModel() {
         }
     }
 
-}
-
-class TasksViewModelFactory(private val repository: ITasksRepo): ViewModelProvider.Factory{
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(ITasksRepo::class.java).newInstance(repository)
-    }
 }

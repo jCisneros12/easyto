@@ -10,8 +10,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
-class TasksRepoImpl(
+class TasksRepoImpl @Inject constructor(
     private val localDataSource: ITasksDataSource,
     private val firebaseDataSource: TasksFirebaseDataSource
 ) : ITasksRepo {

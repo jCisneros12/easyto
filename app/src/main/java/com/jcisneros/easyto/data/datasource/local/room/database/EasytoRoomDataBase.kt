@@ -13,25 +13,4 @@ abstract class EasytoRoomDataBase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
 
-    companion object {
-        //singleton instance
-        @Volatile
-        private var INSTANCE: EasytoRoomDataBase? = null
-
-        fun getDataBase(context: Context): EasytoRoomDataBase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    EasytoRoomDataBase::class.java,
-                    Const.EASYTO_DATABASE_NAME//data base name
-                ).build()
-                INSTANCE = instance
-                //return instance
-                return instance
-            }
-        }
-    }
-
 }

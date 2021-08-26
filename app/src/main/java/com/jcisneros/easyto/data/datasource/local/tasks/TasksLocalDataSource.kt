@@ -13,9 +13,10 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class TasksLocalDataSource(private val taskDao: TaskDao) : ITasksDataSource {
+class TasksLocalDataSource @Inject constructor(private val taskDao: TaskDao) : ITasksDataSource {
 
     //method to get tasks from local DB
     override suspend fun getAllTasks(): Flow<Resource<List<TaskModel>>> {

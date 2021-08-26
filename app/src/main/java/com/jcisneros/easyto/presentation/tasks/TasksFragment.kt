@@ -15,6 +15,7 @@ import com.jcisneros.easyto.R
 import com.jcisneros.easyto.data.datasource.local.room.database.EasytoRoomDataBase
 import com.jcisneros.easyto.data.datasource.local.tasks.TasksLocalDataSource
 import com.jcisneros.easyto.data.datasource.firebase.tasks.TasksFirebaseDataSource
+import com.jcisneros.easyto.data.datasource.local.room.dao.TaskDao
 import com.jcisneros.easyto.data.model.TaskModel
 import com.jcisneros.easyto.databinding.FragmentTasksBinding
 import com.jcisneros.easyto.domain.repository.tasks.TasksRepoImpl
@@ -22,25 +23,34 @@ import com.jcisneros.easyto.presentation.MainActivity
 import com.jcisneros.easyto.presentation.login.LoginActivity
 import com.jcisneros.easyto.presentation.taskdetail.TaskDetailActivity
 import com.jcisneros.easyto.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class TasksFragment : Fragment(), TasksAdapter.OnCategoryClickListener {
+
+    @Inject
+    lateinit var taskDao: TaskDao
 
     //ViewBinding
     private var _binding: FragmentTasksBinding? = null
     private val binding get() = _binding!!
 
     //ViewModel
-    private val viewModel by viewModels<TasksViewModel> {
-        TasksViewModelFactory(
-            TasksRepoImpl(
-                TasksLocalDataSource(
-                    EasytoRoomDataBase.getDataBase(requireContext().applicationContext).taskDao()
-                ),
-                TasksFirebaseDataSource()
-            )
-        )
-    }
+    @ExperimentalCoroutinesApi
+    private val viewModel by viewModels<TasksViewModel>()
+//    {TODO: delete this
+//        TasksViewModelFactory(
+//            TasksRepoImpl(
+//                TasksLocalDataSource(
+//                    EasytoRoomDataBase.getDataBase(requireContext().applicationContext).taskDao()
+//                ),
+//                TasksFirebaseDataSource()
+//            )
+//        )
+//    }
 
     //Recycler view adapter
     private val adapter: TasksAdapter by lazy {
