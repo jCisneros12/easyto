@@ -24,7 +24,7 @@
 | Login Screen | Home |  Task details |
 |:-:|:-:|:-:|
 | ![Fist](screenshots/easyto_login_sc_white.png?raw=true) | ![3](screenshots/easyto_home_sc_white.png?raw=true) | ![3](screenshots/easyto_task_sc_white.png?raw=true) |
-| Main Screen Dark | Detail Dark |  Favs Dark |
+| Login Screen Dark | Home Dark |  Details Dark |
 | ![4](screenshots/easyto_login_sc_black.png?raw=true) | ![5](screenshots/easyto_home_sc_black.png?raw=true) | ![6](screenshots/easyto_task_sc_black.png?raw=true) |
 
 ## Package Structure 📦
